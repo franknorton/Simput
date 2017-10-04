@@ -1,0 +1,15 @@
+C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\bin\Debug\Simplut.dll
+C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\bin\Debug\Simplut.pdb
+C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\bin\Debug\MonoGame.Framework.dll
+C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\bin\Debug\MonoGame.Framework.xml
+C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\obj\Debug\Simput.csprojResolveAssemblyReference.cache
+C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\obj\Debug\Simput.csproj.CoreCompileInputs.cache
+C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\obj\Debug\Simplut.dll
+C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\obj\Debug\Simplut.pdb
+C:\Users\fnorton\Documents\lunch\Monogame Projects\Simput\Simput\obj\Debug\Simput.csprojResolveAssemblyReference.cache
+C:\Users\fnorton\Documents\lunch\Monogame Projects\Simput\Simput\obj\Debug\Simplut.dll
+C:\Users\fnorton\Documents\lunch\Monogame Projects\Simput\Simput\obj\Debug\Simplut.pdb
+C:\Users\fnorton\Documents\lunch\Monogame Projects\Simput\Simput\bin\Debug\Simplut.dll
+C:\Users\fnorton\Documents\lunch\Monogame Projects\Simput\Simput\bin\Debug\Simplut.pdb
+C:\Users\fnorton\Documents\lunch\Monogame Projects\Simput\Simput\bin\Debug\MonoGame.Framework.dll
+C:\Users\fnorton\Documents\lunch\Monogame Projects\Simput\Simput\bin\Debug\MonoGame.Framework.xml
