@@ -1,8 +1,0 @@
-C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\bin\Release\Simplut.dll
-C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\bin\Release\Simplut.pdb
-C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\bin\Release\MonoGame.Framework.dll
-C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\bin\Release\MonoGame.Framework.xml
-C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\obj\Release\Simplut.csprojResolveAssemblyReference.cache
-C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\obj\Release\Simplut.csproj.CoreCompileInputs.cache
-C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\obj\Release\Simplut.dll
-C:\Users\fnorton\Documents\lunch\Games\NetRTS\netserver\Simplut\obj\Release\Simplut.pdb
