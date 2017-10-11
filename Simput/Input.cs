@@ -16,8 +16,8 @@ namespace Simput
         private static SimpleMouse mouse;
         public static SimpleMouse Mouse { get { return mouse; } }
 
-        private static SimpleGamepad[] gamepads;
-        public static SimpleGamepad GamePad(PlayerIndex playerNumber) { return gamepads[(int)playerNumber]; }
+        private static SimpleGamePad[] gamepads;
+        public static SimpleGamePad GamePad(PlayerIndex playerNumber) { return gamepads[(int)playerNumber]; }
 
         public static GamePadDeadZone GamePadDeadZoneMode;
 
@@ -27,12 +27,12 @@ namespace Simput
         {
             keyboard = new SimpleKeyboard(game);
             mouse = new SimpleMouse(game);
-            gamepads = new SimpleGamepad[4] 
+            gamepads = new SimpleGamePad[4] 
             {
-                new SimpleGamepad(PlayerIndex.One, game),
-                new SimpleGamepad(PlayerIndex.Two, game),
-                new SimpleGamepad(PlayerIndex.Three, game),
-                new SimpleGamepad(PlayerIndex.Four, game)
+                new SimpleGamePad(PlayerIndex.One, game),
+                new SimpleGamePad(PlayerIndex.Two, game),
+                new SimpleGamePad(PlayerIndex.Three, game),
+                new SimpleGamePad(PlayerIndex.Four, game)
             };
             GamePadDeadZoneMode = GamePadDeadZone.IndependentAxes;
         }
@@ -56,12 +56,12 @@ namespace Simput
             return Keyboard.Touched;
         }
 
-        public static void Update()
+        public static void Update(GameTime gameTime)
         {
             keyboard.Update();
             mouse.Update();
             foreach (var gamepad in gamepads)
-                gamepad.Update(GamePadDeadZoneMode);
+                gamepad.Update(gameTime, GamePadDeadZoneMode);
         }
     }
 }

@@ -8,16 +8,20 @@ using Microsoft.Xna.Framework;
 
 namespace Simput
 {
-    public class SimpleGamepad
+    public class SimpleGamePad
     {
         private GamePadState lastGamePadState;
         private GamePadState currentGamePadState;
         private PlayerIndex playerNumber;
         private Game game;
 
-        public bool Touched;
+        private bool vibrating = false;
+        private float vibratingTime = 0;
+        private float vibrationDuration = 0;
 
-        public SimpleGamepad(PlayerIndex playerNumber, Game game)
+        public bool Touched = false;
+
+        public SimpleGamePad(PlayerIndex playerNumber, Game game)
         {
             this.game = game;
             this.playerNumber = playerNumber;
@@ -25,13 +29,30 @@ namespace Simput
             currentGamePadState = GamePad.GetState(playerNumber);
         }
 
-        public void Update(GamePadDeadZone deadZoneMode)
+        public void Update(GameTime gameTime, GamePadDeadZone deadZoneMode)
         {
             if (game.IsActive)
             {
                 lastGamePadState = currentGamePadState;
                 currentGamePadState = GamePad.GetState(playerNumber, deadZoneMode);
+                UpdateVibrating(gameTime);
                 CheckGamePadTouched();
+            }
+        }
+        private void UpdateVibrating(GameTime gameTime)
+        {
+            if(vibrating)
+            {
+                vibratingTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if(vibratingTime >= vibrationDuration)
+                {
+                    if (IsConnected)
+                        GamePad.SetVibration(playerNumber, 0, 0);
+
+                    vibratingTime = 0;
+                    vibrationDuration = 0;
+                    vibrating = false;
+                }
             }
         }
         private void CheckGamePadTouched()
@@ -73,6 +94,25 @@ namespace Simput
         {
             if (!IsConnected) return false;
             return currentGamePadState.IsButtonUp(button);
+        }
+
+        public void Vibrate(float leftAmount, float rightAmount)
+        {
+            Vibrate(leftAmount, rightAmount, 0);
+        }
+        public void Vibrate(float leftAmount, float rightAmount, float durationInMilliseconds)
+        {
+            vibrationDuration = durationInMilliseconds;
+            vibratingTime = 0;
+            leftAmount = MathHelper.Clamp(leftAmount, 0, 1);
+            rightAmount = MathHelper.Clamp(rightAmount, 0, 1);
+            GamePad.SetVibration(playerNumber, leftAmount, rightAmount);
+        }
+        public void StopVibrating()
+        {
+            GamePad.SetVibration(playerNumber, 0, 0);
+            vibrationDuration = 0;
+            vibratingTime = 0;
         }
     }
 }
