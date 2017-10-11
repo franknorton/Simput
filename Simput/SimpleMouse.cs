@@ -22,6 +22,7 @@ namespace Simput
 
         public bool LockMouseToWindow = false;
         public bool MouseTouched;
+        public bool UseVirtualCursor = false;
         private int virtualMouseX;
         private int virtualMouseY;
         private GameWindow window;
@@ -43,7 +44,7 @@ namespace Simput
 
             MoveVirtualMouse();
             ConstrainMouse();
-            CheckButtonsTouched();
+            CheckTouched();
         }
 
         private void MoveVirtualMouse()
@@ -66,13 +67,13 @@ namespace Simput
             if (LockMouseToWindow)
                 Mouse.SetPosition(window.ClientBounds.Center.X, window.ClientBounds.Center.Y);
         }
-        private void CheckButtonsTouched()
+        private void CheckTouched()
         {
             if (currentMouseState != lastMouseState) MouseTouched = true;
         }
 
-        public int X { get { return currentMouseState.X; } }
-        public int Y { get { return currentMouseState.Y; } }
+        public int X { get { if (UseVirtualCursor) return virtualMouseX; else return currentMouseState.X; } }
+        public int Y { get { if (UseVirtualCursor) return virtualMouseY; else return currentMouseState.Y; } }
 
         public bool WasButtonPressed(MouseButtons button)
         {

@@ -19,42 +19,65 @@ namespace Simput
     {
         private KeyboardState lastKeyboardState;
         private KeyboardState currentKeyboardState;
+        private Game game;
 
         public IKeyboardSubscriber Subscriber;
         public bool KeyboardTouched;
 
-        public SimpleKeyboard(GameWindow window)
+        public SimpleKeyboard(Game game)
         {
+            this.game = game;
             lastKeyboardState = Keyboard.GetState();
             currentKeyboardState = Keyboard.GetState();
-            window.TextInput += Window_TextInput;
+            game.Window.TextInput += Window_TextInput;
         }
         
         internal void Update()
         {
-            lastKeyboardState = currentKeyboardState;
-            currentKeyboardState = Keyboard.GetState();
+            if (game.IsActive)
+            {
+                lastKeyboardState = currentKeyboardState;
+                currentKeyboardState = Keyboard.GetState();               
+            }
+
             KeyboardTouched = false;
+            if (currentKeyboardState.GetPressedKeys().Length > 0)
+                KeyboardTouched = true;
         }
 
         public bool WasKeyPressed(Keys key)
         {
+            if(!game.IsActive)
+                return false;
+
             return lastKeyboardState.IsKeyUp(key) && currentKeyboardState.IsKeyDown(key);
         }
         public bool WasKeyReleased(Keys key)
         {
+            if (!game.IsActive)
+                return false;
+
             return lastKeyboardState.IsKeyDown(key) && currentKeyboardState.IsKeyUp(key);
         }
         public bool IsKeyDown(Keys key)
         {
+            if (!game.IsActive)
+                return false;
+
             return currentKeyboardState.IsKeyDown(key);
         }
         public bool IsKeyUp(Keys key)
         {
+            if (!game.IsActive)
+                return false;
+
             return currentKeyboardState.IsKeyUp(key);
         }
         private void Window_TextInput(object sender, TextInputEventArgs e)
         {
+            if (!game.IsActive)
+                return;
+
             if (Char.IsControl(e.Character))
             {
                 try

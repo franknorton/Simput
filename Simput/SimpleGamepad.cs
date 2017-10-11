@@ -31,12 +31,12 @@ namespace Simput
         }
         private void CheckGamePadTouched()
         {
-            if(IsConnected)
+            GamePadTouched = false;
+
+            if (IsConnected)
             {
                 GamePadTouched = currentGamePadState.PacketNumber != lastGamePadState.PacketNumber;
             }
-
-            GamePadTouched = false;
         }
 
         public bool IsConnected { get { return currentGamePadState.IsConnected; } }
