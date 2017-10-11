@@ -21,8 +21,8 @@ namespace Simput
         private KeyboardState currentKeyboardState;
         private Game game;
 
-        public IKeyboardSubscriber Subscriber;
-        public bool KeyboardTouched;
+        public IKeyboardSubscriber CharInputSubscriber;
+        public bool Touched;
 
         public SimpleKeyboard(Game game)
         {
@@ -40,9 +40,9 @@ namespace Simput
                 currentKeyboardState = Keyboard.GetState();               
             }
 
-            KeyboardTouched = false;
+            Touched = false;
             if (currentKeyboardState.GetPressedKeys().Length > 0)
-                KeyboardTouched = true;
+                Touched = true;
         }
 
         public bool WasKeyPressed(Keys key)
@@ -83,15 +83,15 @@ namespace Simput
                 try
                 {
                     var control = ControlCodeParser.Parse(e.Character);
-                    if (Subscriber != null)
-                        Subscriber.OnControlEntered(control);
+                    if (CharInputSubscriber != null)
+                        CharInputSubscriber.OnControlEntered(control);
                 }
                 catch { }
             }
             else
             {
-                if(Subscriber != null)
-                    Subscriber.OnCharEntered(e.Character, e.Key);
+                if(CharInputSubscriber != null)
+                    CharInputSubscriber.OnCharEntered(e.Character, e.Key);
             }
         }
     }

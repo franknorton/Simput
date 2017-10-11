@@ -25,9 +25,15 @@ namespace Simput
 
         public static void Initialize(Game game)
         {
-            keyboard = new SimpleKeyboard(game.Window);
-            mouse = new SimpleMouse(game.Window);
-            gamepads = new SimpleGamepad[4] { new SimpleGamepad(PlayerIndex.One), new SimpleGamepad(PlayerIndex.Two), new SimpleGamepad(PlayerIndex.Three), new SimpleGamepad(PlayerIndex.Four) };
+            keyboard = new SimpleKeyboard(game);
+            mouse = new SimpleMouse(game);
+            gamepads = new SimpleGamepad[4] 
+            {
+                new SimpleGamepad(PlayerIndex.One, game),
+                new SimpleGamepad(PlayerIndex.Two, game),
+                new SimpleGamepad(PlayerIndex.Three, game),
+                new SimpleGamepad(PlayerIndex.Four, game)
+            };
             GamePadDeadZoneMode = GamePadDeadZone.IndependentAxes;
         }
 
@@ -35,7 +41,7 @@ namespace Simput
         {
             foreach(var gamepad in gamepads)
             {
-                if (gamepad.GamePadTouched)
+                if (gamepad.Touched)
                     return true;
             }
 
@@ -43,11 +49,11 @@ namespace Simput
         }
         public static bool MouseTouched()
         {
-            return Mouse.MouseTouched;
+            return Mouse.Touched;
         }
         public static bool KeyboardTouched()
         {
-            return Keyboard.KeyboardTouched;
+            return Keyboard.Touched;
         }
 
         public static void Update()

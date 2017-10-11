@@ -13,11 +13,13 @@ namespace Simput
         private GamePadState lastGamePadState;
         private GamePadState currentGamePadState;
         private PlayerIndex playerNumber;
+        private Game game;
 
-        public bool GamePadTouched;
+        public bool Touched;
 
-        public SimpleGamepad(PlayerIndex playerNumber)
+        public SimpleGamepad(PlayerIndex playerNumber, Game game)
         {
+            this.game = game;
             this.playerNumber = playerNumber;
             lastGamePadState = GamePad.GetState(playerNumber);
             currentGamePadState = GamePad.GetState(playerNumber);
@@ -25,17 +27,20 @@ namespace Simput
 
         public void Update(GamePadDeadZone deadZoneMode)
         {
-            lastGamePadState = currentGamePadState;
-            currentGamePadState = GamePad.GetState(playerNumber, deadZoneMode);
-            CheckGamePadTouched();
+            if (game.IsActive)
+            {
+                lastGamePadState = currentGamePadState;
+                currentGamePadState = GamePad.GetState(playerNumber, deadZoneMode);
+                CheckGamePadTouched();
+            }
         }
         private void CheckGamePadTouched()
         {
-            GamePadTouched = false;
+            Touched = false;
 
             if (IsConnected)
             {
-                GamePadTouched = currentGamePadState.PacketNumber != lastGamePadState.PacketNumber;
+                Touched = currentGamePadState.PacketNumber != lastGamePadState.PacketNumber;
             }
         }
 
