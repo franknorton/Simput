@@ -154,6 +154,31 @@ namespace Simput
             }
         }
 
+        public void RemoveAction(string actionName)
+        {
+            InputAction action;
+            if(actions.TryGetValue(actionName, out action))
+            {
+                actions.Remove(actionName);
+            }
+        }
+        public void RemoveVector(string vectorName)
+        {
+            InputVector action;
+            if (vectors.TryGetValue(vectorName, out action))
+            {
+                vectors.Remove(vectorName);
+            }
+        }
+        public void RemoveAxis(string axisName)
+        {
+            InputAxis action;
+            if (axes.TryGetValue(axisName, out action))
+            {
+                axes.Remove(axisName);
+            }
+        }
+
         public bool KeyInUse(Keys key, out InputAction action)
         {
             foreach(var inputAction in actions.Values)
