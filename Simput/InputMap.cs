@@ -13,11 +13,15 @@ namespace Simput
     {
         public InputMode Mode;
         private Dictionary<string, InputAction> actions;
+        private Dictionary<string, InputAxis> axes;
+        private Dictionary<string, InputVector> vectors;
         private PlayerIndex playerNumber;
 
         public InputMap(PlayerIndex playerNumber)
         {
             actions = new Dictionary<string, InputAction>();
+            axes = new Dictionary<string, InputAxis>();
+            vectors = new Dictionary<string, InputVector>();
             Mode = InputMode.KeyboardAndMouse;
             this.playerNumber = playerNumber;
         }
@@ -34,6 +38,32 @@ namespace Simput
         public void AddAction(string actionName, InputAction newAction)
         {
             actions.Add(actionName, newAction);
+        }
+        public InputAxis GetAxis(string axisName)
+        {
+            InputAxis axis;
+            if(axes.TryGetValue(axisName, out axis))
+            {
+                return axis;
+            }
+            return null;
+        }
+        public void AddAxis(string axisName, InputAxis newAxis)
+        {
+            axes.Add(axisName, newAxis);
+        }
+        public InputVector GetVector(string vectorName)
+        {
+            InputVector vector;
+            if(vectors.TryGetValue(vectorName, out vector))
+            {
+                return vector;
+            }
+            return null;
+        }
+        public void AddVector(string vectorName, InputVector newVector)
+        {
+            vectors.Add(vectorName, newVector);
         }
 
         public bool WasActionPressed(string actionName)
@@ -91,6 +121,36 @@ namespace Simput
                     return action.IsMouseOrKeyboardUp();
                 default:
                     return false;
+            }
+        }
+
+        public float AxisValue(string axisName)
+        {
+            var axis = GetAxis(axisName);
+            if (axis == null)
+                return 0;
+
+            switch(Mode)
+            {
+                case InputMode.GamePad:
+                    return axis.Value(playerNumber);
+                default:
+                    return 0;
+            }
+        }
+
+        public Vector2 VectorValue(string vectorName)
+        {
+            var vector = GetVector(vectorName);
+            if (vector == null)
+                return Vector2.Zero;
+            
+            switch(Mode)
+            {
+                case InputMode.GamePad:
+                    return vector.Value(playerNumber);
+                default:
+                    return Vector2.Zero;
             }
         }
 
