@@ -49,8 +49,10 @@
     <Compile Include="ControlCodeParser.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InputAction.cs" />
+    <Compile Include="InputAxis.cs" />
     <Compile Include="InputMap.cs" />
     <Compile Include="InputMode.cs" />
+    <Compile Include="InputVector.cs" />
     <Compile Include="MouseExtensions.cs" />
     <Compile Include="PlayerInput.cs" />
     <Compile Include="SimpleGamePad.cs" />
