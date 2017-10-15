@@ -135,7 +135,7 @@ namespace Simput
                 case InputMode.GamePad:
                     return axis.Value(playerNumber);
                 default:
-                    return 0;
+                    return axis.Value(playerNumber);
             }
         }
 
@@ -150,7 +150,7 @@ namespace Simput
                 case InputMode.GamePad:
                     return vector.Value(playerNumber);
                 default:
-                    return Vector2.Zero;
+                    return vector.Value(playerNumber);
             }
         }
 

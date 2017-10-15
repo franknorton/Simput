@@ -67,12 +67,12 @@ namespace Simput
 
         public bool IsConnected { get { return currentGamePadState.IsConnected; } }
 
-        public Vector2 LeftThumbStick { get { if(!IsConnected) { return Vector2.Zero; } return currentGamePadState.ThumbSticks.Left; } }
+        public Vector2 LeftThumbStick { get { if(!IsConnected) { return Vector2.Zero; } return new Vector2(LeftThumbstickX, LeftThumbstickY); } }
         public float LeftThumbstickX { get { if (!IsConnected) { return 0; } return currentGamePadState.ThumbSticks.Left.X; } }
-        public float LeftThumbstickY { get { if (!IsConnected) { return 0; } return currentGamePadState.ThumbSticks.Left.Y; } }
-        public Vector2 RightThumbStick { get { if (!IsConnected) { return Vector2.Zero; } return currentGamePadState.ThumbSticks.Right; } }
+        public float LeftThumbstickY { get { if (!IsConnected) { return 0; } return -currentGamePadState.ThumbSticks.Left.Y; } }
+        public Vector2 RightThumbStick { get { if (!IsConnected) { return Vector2.Zero; } return new Vector2(RightThumbstickX, RightThumbstickY); } }
         public float RightThumbstickX { get { if (!IsConnected) { return 0; } return currentGamePadState.ThumbSticks.Right.X; } }
-        public float RightThumbstickY { get { if (!IsConnected) { return 0; } return currentGamePadState.ThumbSticks.Right.Y; } }
+        public float RightThumbstickY { get { if (!IsConnected) { return 0; } return -currentGamePadState.ThumbSticks.Right.Y; } }
         public float LeftTrigger { get { if (!IsConnected) { return 0; } return currentGamePadState.Triggers.Left; } }
         public float RightTrigger { get { if (!IsConnected) { return 0; } return currentGamePadState.Triggers.Right; } }
         
