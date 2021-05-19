@@ -17,31 +17,31 @@ namespace Simput
 
     public class SimpleMouse
     {
-        private MouseState lastMouseState;
-        private MouseState currentMouseState;
+        private MouseState _lastMouseState;
+        private MouseState _currentMouseState;
 
         public bool LockMouseToWindow = false;
         public bool UseVirtualCursor = false;
         public bool Touched;
-        private int virtualMouseX;
-        private int virtualMouseY;
-        private Game game;
+        private int _virtualMouseX;
+        private int _virtualMouseY;
+        private readonly Game _game;
 
         public SimpleMouse(Game game)
         {
-            lastMouseState = Mouse.GetState();
-            currentMouseState = Mouse.GetState();
-            this.game = game;
-            virtualMouseX = game.Window.ClientBounds.Center.X;
-            virtualMouseY = game.Window.ClientBounds.Center.Y;
+            _lastMouseState = Mouse.GetState();
+            _currentMouseState = Mouse.GetState();
+            this._game = game;
+            _virtualMouseX = game.Window.ClientBounds.Center.X;
+            _virtualMouseY = game.Window.ClientBounds.Center.Y;
         }
 
         public void Update()
         {
-            if (game.IsActive)
+            if (_game.IsActive)
             {
-                lastMouseState = currentMouseState;
-                currentMouseState = Mouse.GetState();
+                _lastMouseState = _currentMouseState;
+                _currentMouseState = Mouse.GetState();
                 Touched = false;
 
                 MoveVirtualMouse();
@@ -52,29 +52,29 @@ namespace Simput
 
         private void MoveVirtualMouse()
         {
-            var changeInX = currentMouseState.X - lastMouseState.X;
-            var changeInY = currentMouseState.Y - lastMouseState.Y;
+            var changeInX = _currentMouseState.X - _lastMouseState.X;
+            var changeInY = _currentMouseState.Y - _lastMouseState.Y;
             if (changeInX != 0 || changeInY != 0) Touched = true;
 
             if (UseVirtualCursor)
             {
-                virtualMouseX += changeInX;
-                virtualMouseY += changeInY;
+                _virtualMouseX += changeInX;
+                _virtualMouseY += changeInY;
 
-                if (virtualMouseX < 0) virtualMouseX = 0;
-                if (virtualMouseX > game.Window.ClientBounds.Width) virtualMouseX = game.Window.ClientBounds.Width;
-                if (virtualMouseY < 0) virtualMouseY = 0;
-                if (virtualMouseY > game.Window.ClientBounds.Height) virtualMouseY = game.Window.ClientBounds.Height;
+                if (_virtualMouseX < 0) _virtualMouseX = 0;
+                if (_virtualMouseX > _game.Window.ClientBounds.Width) _virtualMouseX = _game.Window.ClientBounds.Width;
+                if (_virtualMouseY < 0) _virtualMouseY = 0;
+                if (_virtualMouseY > _game.Window.ClientBounds.Height) _virtualMouseY = _game.Window.ClientBounds.Height;
             }
         }
         private void ConstrainMouse()
         {
-            if (LockMouseToWindow && game.IsActive)
-                Mouse.SetPosition(game.Window.ClientBounds.Center.X, game.Window.ClientBounds.Center.Y);
+            if (LockMouseToWindow && _game.IsActive)
+                Mouse.SetPosition(_game.Window.ClientBounds.Center.X, _game.Window.ClientBounds.Center.Y);
         }
         private void CheckTouched()
         {
-            if (currentMouseState != lastMouseState) Touched = true;
+            if (_currentMouseState != _lastMouseState) Touched = true;
         }
 
         public int X
@@ -82,9 +82,9 @@ namespace Simput
             get
             {
                 if (LockMouseToWindow || UseVirtualCursor)
-                    return virtualMouseX;
+                    return _virtualMouseX;
                 else
-                    return currentMouseState.X;
+                    return _currentMouseState.X;
             }
         }
         public int Y
@@ -92,38 +92,38 @@ namespace Simput
             get
             {
                 if (LockMouseToWindow || UseVirtualCursor)
-                    return virtualMouseY;
-                else return currentMouseState.Y;
+                    return _virtualMouseY;
+                else return _currentMouseState.Y;
             }
         }
 
         public bool WasButtonPressed(MouseButtons button)
         {
-            if (!game.IsActive)
+            if (!_game.IsActive)
                 return false;
 
-            return lastMouseState.IsButtonUp(button) && currentMouseState.IsButtonDown(button);
+            return _lastMouseState.IsButtonUp(button) && _currentMouseState.IsButtonDown(button);
         }
         public bool WasButtonReleased(MouseButtons button)
         {
-            if (!game.IsActive)
+            if (!_game.IsActive)
                 return false;
 
-            return lastMouseState.IsButtonDown(button) && currentMouseState.IsButtonUp(button);
+            return _lastMouseState.IsButtonDown(button) && _currentMouseState.IsButtonUp(button);
         }
         public bool IsButtonDown(MouseButtons button)
         {
-            if (!game.IsActive)
+            if (!_game.IsActive)
                 return false;
 
-            return currentMouseState.IsButtonDown(button);
+            return _currentMouseState.IsButtonDown(button);
         }
         public bool IsButtonUp(MouseButtons button)
         {
-            if (!game.IsActive)
+            if (!_game.IsActive)
                 return false;
 
-            return currentMouseState.IsButtonUp(button);
+            return _currentMouseState.IsButtonUp(button);
         }
     }
 }

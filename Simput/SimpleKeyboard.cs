@@ -17,65 +17,65 @@ namespace Simput
     }
     public class SimpleKeyboard
     {
-        private KeyboardState lastKeyboardState;
-        private KeyboardState currentKeyboardState;
-        private Game game;
+        private KeyboardState _lastKeyboardState;
+        private KeyboardState _currentKeyboardState;
+        private readonly Game _game;
 
         public IKeyboardSubscriber CharInputSubscriber;
         public bool Touched;
 
         public SimpleKeyboard(Game game)
         {
-            this.game = game;
-            lastKeyboardState = Keyboard.GetState();
-            currentKeyboardState = Keyboard.GetState();
+            this._game = game;
+            _lastKeyboardState = Keyboard.GetState();
+            _currentKeyboardState = Keyboard.GetState();
             game.Window.TextInput += Window_TextInput;
         }
         
-        internal void Update()
+        public void Update()
         {
-            if (game.IsActive)
+            if (_game.IsActive)
             {
-                lastKeyboardState = currentKeyboardState;
-                currentKeyboardState = Keyboard.GetState();               
+                _lastKeyboardState = _currentKeyboardState;
+                _currentKeyboardState = Keyboard.GetState();               
             }
 
             Touched = false;
-            if (currentKeyboardState.GetPressedKeys().Length > 0)
+            if (_currentKeyboardState.GetPressedKeys().Length > 0)
                 Touched = true;
         }
 
         public bool WasKeyPressed(Keys key)
         {
-            if(!game.IsActive)
+            if(!_game.IsActive)
                 return false;
 
-            return lastKeyboardState.IsKeyUp(key) && currentKeyboardState.IsKeyDown(key);
+            return _lastKeyboardState.IsKeyUp(key) && _currentKeyboardState.IsKeyDown(key);
         }
         public bool WasKeyReleased(Keys key)
         {
-            if (!game.IsActive)
+            if (!_game.IsActive)
                 return false;
 
-            return lastKeyboardState.IsKeyDown(key) && currentKeyboardState.IsKeyUp(key);
+            return _lastKeyboardState.IsKeyDown(key) && _currentKeyboardState.IsKeyUp(key);
         }
         public bool IsKeyDown(Keys key)
         {
-            if (!game.IsActive)
+            if (!_game.IsActive)
                 return false;
 
-            return currentKeyboardState.IsKeyDown(key);
+            return _currentKeyboardState.IsKeyDown(key);
         }
         public bool IsKeyUp(Keys key)
         {
-            if (!game.IsActive)
+            if (!_game.IsActive)
                 return false;
 
-            return currentKeyboardState.IsKeyUp(key);
+            return _currentKeyboardState.IsKeyUp(key);
         }
         private void Window_TextInput(object sender, TextInputEventArgs e)
         {
-            if (!game.IsActive)
+            if (!_game.IsActive)
                 return;
 
             if (Char.IsControl(e.Character))
